@@ -6,11 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     public float velocidad; 
     public float velocidadMax;
+    public float fuerzaSalto;
+    public bool colPies = false;
 
     private Rigidbody2D rPlayer;
     private float h;
 
     private bool miraDerecha = true;
+    private bool colPlayer = false;
 
     void Start(){
         rPlayer = GetComponent<Rigidbody2D>();
@@ -18,6 +21,15 @@ public class PlayerController : MonoBehaviour
 
     void Update(){
         giraPlayer(h); 
+
+        //Configuración del salto
+        colPies = CheckGround.colPies;
+        if (Input.GetButtonDown("Jump") && colPies)
+        {
+            Debug.Log("Está saltando/Pulsó el espacio");
+            rPlayer.linearVelocity = new Vector2(rPlayer.linearVelocity.x, 0f);
+            rPlayer.AddForce(new Vector2(0, fuerzaSalto), ForceMode2D.Impulse);
+        }
     }
 
     void FixedUpdate()

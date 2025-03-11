@@ -386,7 +386,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 44534
+  m_LastSelectedObjectID: -6572
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -487,9 +487,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 78b00000
-    m_LastClickedID: 45176
-    m_ExpandedIDs: 0000000090ae000092ae000094ae000000ca9a3b
+    m_SelectedIDs: 7eb00000
+    m_LastClickedID: 45182
+    m_ExpandedIDs: 0000000096ae000098ae00009aae000080b0000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -518,7 +518,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000090ae000092ae000094ae0000
+    m_ExpandedIDs: 0000000096ae000098ae00009aae0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -546,7 +546,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c62300009c0a0100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -615,9 +615,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f6ad0000
-      m_LastClickedID: 44534
-      m_ExpandedIDs: 0cfbffffd8ad0000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 0cfbffffdead0000fcad0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1221,9 +1221,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -0.9656345, y: -1.9276769, z: 0.0037261064}
+    m_Target: {x: 0.030724749, y: -1.3414664, z: -0.055229053}
     speed: 2
-    m_Value: {x: -0.9656345, y: -1.9276769, z: 0.0037261064}
+    m_Value: {x: 0.030724749, y: -1.3414664, z: -0.055229053}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1273,9 +1273,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 7.5663886
+    m_Target: 5.4246397
     speed: 2
-    m_Value: 7.5663886
+    m_Value: 5.4246397
   m_Ortho:
     m_Target: 1
     speed: 2
