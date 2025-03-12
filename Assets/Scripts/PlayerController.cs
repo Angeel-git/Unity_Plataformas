@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public bool colPies = false;
 
     private Rigidbody2D rPlayer;
+    private Animator aPlayer;
     private float h;
 
     private bool miraDerecha = true;
@@ -17,10 +18,16 @@ public class PlayerController : MonoBehaviour
 
     void Start(){
         rPlayer = GetComponent<Rigidbody2D>();
+        aPlayer = GetComponent<Animator>();
     }
 
     void Update(){
         giraPlayer(h); 
+        aPlayer.SetFloat("velocidadX", Mathf.Abs(rPlayer.linearVelocity.x));
+        aPlayer.SetFloat("velocidadY", rPlayer.linearVelocity.y);
+        aPlayer.SetBool("tocaSuelo", colPies);
+
+
 
         //Configuración del salto
         colPies = CheckGround.colPies;
