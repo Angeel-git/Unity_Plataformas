@@ -67,8 +67,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\SeguimientoCamara.cs" />
-    <Compile Include="Assets\Scripts\MejoraSalto.cs" />
-    <Compile Include="Assets\Scripts\CheckGround.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
