@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Unity_Plataformas.sln"
+    "dotnet.defaultSolution": "Unity_Plataformas.sln",
+    "git.ignoreLimitWarning": true
 }
