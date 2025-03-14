@@ -443,6 +443,7 @@
 "Assets/Scripts/CheckGround.cs"
 "Assets/Scripts/MejoraSalto.cs"
 "Assets/Scripts/PlayerController.cs"
+"Assets/Scripts/SeguimientoCamara.cs"
 -langversion:9.0
 /deterministic
 /optimize+

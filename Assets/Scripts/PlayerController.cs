@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float velocidad; 
     public float velocidadMax;
     public float fuerzaSalto;
+    public float friccionSuelo;
     public bool colPies = false;
 
     private Rigidbody2D rPlayer;
@@ -45,6 +46,13 @@ public class PlayerController : MonoBehaviour
         rPlayer.AddForce(Vector2.right * velocidad * h);
         float limiteVel = Mathf.Clamp(rPlayer.linearVelocity.x, -velocidadMax, velocidadMax);
         rPlayer.linearVelocity = new Vector2(limiteVel, rPlayer.linearVelocity.y);
+
+        if ( h == 0 && colPies)
+        {
+            Vector3 velocidadArreglada = rPlayer.linearVelocity;
+            velocidadArreglada.x *= friccionSuelo;
+            rPlayer.linearVelocity = velocidadArreglada;
+        }
     }
 
     void giraPlayer(float horizontal){
