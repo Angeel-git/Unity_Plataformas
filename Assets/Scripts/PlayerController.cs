@@ -5,31 +5,47 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Valores Configurables")]
-    [SerializeField] private float velocidad;
-    [SerializeField] private float fuerzaSalto;
-    [SerializeField] private bool saltoMejorado;
-    [SerializeField] private float saltoLargo = 1.5f; // Multiplicador para aumentar la gravedad cuando el jugador cae
-    [SerializeField] private float saltoCorto = 1f;   // Multiplicador para aumentar la gravedad si suelta el botón de salto antes de tiempo
-    [SerializeField] private Transform checkGround;
-    [SerializeField] private float checkGroundRadio;
-    [SerializeField] private LayerMask capaSuelo;
+    [SerializeField] private float      velocidad;
+    [SerializeField] private float      fuerzaSalto;
+    [SerializeField] private bool       saltoMejorado;
+    [SerializeField] private float      saltoLargo = 1.5f; // Multiplicador para aumentar la gravedad cuando el jugador cae
+    [SerializeField] private float      saltoCorto = 1f;   // Multiplicador para aumentar la gravedad si suelta el botón de salto antes de tiempo
+    [SerializeField] private Transform  checkGround;
+    [SerializeField] private float      checkGroundRadio;
+    [SerializeField] private LayerMask  capaSuelo;
+    [SerializeField] private float      addRayo;
+    [SerializeField] private float      anguloMax;
+    [SerializeField] private PhysicsMaterial2D      sinF;
+    [SerializeField] private PhysicsMaterial2D      maxF;
 
     [Header("Valores Informativos")]
+    [SerializeField] private bool                tocaSuelo = false;
+    [SerializeField] private bool                enPendiente;
+    [SerializeField] private bool                puedoAndar;
+    [SerializeField] private float               anguloPendiente;
+    [SerializeField] private float           h;
 
-    private Rigidbody2D rPlayer;
-    private Animator aPlayer;
-    private float h;
 
-    private bool tocaSuelo = false;
-    private bool miraDerecha = true;
-    private bool saltando = false;
-    private bool puedoSaltar = false;
-    private Vector2 nuevaVelocidad;
+
+    private Rigidbody2D     rPlayer;
+    private Animator        aPlayer;
+    private bool                miraDerecha = true;
+    private bool                saltando = false;
+    private bool                puedoSaltar = false;
+    private Vector2             nuevaVelocidad;
+    private CapsuleCollider2D   ccPlayer;
+    private Vector2             ccSize;
+    private float               anguloLateral;
+    private float               anguloAnterior;
+    private Vector2             anguloPer;
+
 
     void Start()
     {
         rPlayer = GetComponent<Rigidbody2D>();
         aPlayer = GetComponent<Animator>();
+        ccPlayer = GetComponent<CapsuleCollider2D>();
+        ccSize = ccPlayer.size;
     }
 
     void Update()
@@ -41,23 +57,25 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         checkTocaSuelo();
+        checkPendiente();
         movimientoPlayer();
     }
 
     private void movimientoPlayer()
     {
-        if (tocaSuelo && !saltando)
+        if (tocaSuelo && !saltando && !enPendiente)
         {
             nuevaVelocidad = new Vector2(velocidad * h, 0.0f); // Creando nueva instancia de Vector2
             rPlayer.linearVelocity = nuevaVelocidad; // Cambié linearVelocity por velocity
-        }
-        else
+        }else if(tocaSuelo && !saltando && puedoAndar && enPendiente)
         {
-            if (!tocaSuelo)
-            {
-                nuevaVelocidad = new Vector2(velocidad * h, rPlayer.linearVelocity.y); // Creando nueva instancia de Vector2
-                rPlayer.linearVelocity = nuevaVelocidad; // Cambié linearVelocity por velocity
-            }
+            nuevaVelocidad.Set(velocidad * anguloPer.x * -h, velocidad * anguloPer.y * -h);
+            rPlayer.linearVelocity = nuevaVelocidad;
+        }
+        else if(!tocaSuelo)
+        {
+            nuevaVelocidad = new Vector2(velocidad * h, rPlayer.linearVelocity.y); // Creando nueva instancia de Vector2
+            rPlayer.linearVelocity = nuevaVelocidad; // Cambié linearVelocity por velocity
         }
     }
 
@@ -108,6 +126,50 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void checkPendiente()
+    {
+                                //HORIZONTALES
+        Vector2 posPies = transform.position - (Vector3)(new Vector2(0.0f, ccSize.y / 2));
+        RaycastHit2D hitDelante = Physics2D.Raycast(posPies, Vector2.right, addRayo, capaSuelo);
+        RaycastHit2D hitDetras = Physics2D.Raycast(posPies, -Vector2.right, addRayo, capaSuelo);
+        Debug.DrawRay(posPies, Vector2.right * addRayo, Color.cyan);
+        Debug.DrawRay(posPies, -Vector2.right * addRayo, Color.red);
+
+        if(hitDelante)
+        {
+            enPendiente = true;
+            anguloLateral = Vector2.Angle(hitDelante.normal, Vector2.up);
+        }else if (hitDetras)
+        {
+            enPendiente = true;
+            anguloLateral = Vector2.Angle(hitDetras.normal, Vector2.up);
+        }else
+        {
+            enPendiente = false;
+            anguloLateral = 0.0f;
+        }
+
+                                    //VERTICALES
+        RaycastHit2D hit = Physics2D.Raycast(posPies, Vector2.down, addRayo, capaSuelo);
+        if(hit)
+        {
+            anguloPendiente = Vector2.Angle(hit.normal, Vector2.up);
+            anguloPer = Vector2.Perpendicular(hit.normal).normalized;
+            if(anguloPendiente != anguloAnterior) enPendiente = true;
+            anguloAnterior = anguloPendiente;
+            Debug.DrawRay(hit.point, anguloPer, Color.blue);
+            Debug.DrawRay(hit.point, hit.normal, Color.green);
+        }
+
+        if(anguloPendiente > anguloMax || anguloLateral > anguloMax) puedoAndar = false; else puedoAndar = true;
+        if (enPendiente && puedoAndar && h == 0.0f)
+        {
+            ccPlayer.sharedMaterial = maxF;
+        }else{
+            ccPlayer.sharedMaterial = sinF;
+        }
+}
+
     private void variablesAnimador()
     {
         aPlayer.SetFloat("velocidadX", Mathf.Abs(rPlayer.linearVelocity.x)); // Cambié linearVelocity por velocity
@@ -125,6 +187,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(checkGround.position, checkGroundRadio);
+        if (checkGround != null)
+        {
+            Gizmos.DrawWireSphere(checkGround.position, checkGroundRadio);
+        }
     }
 }

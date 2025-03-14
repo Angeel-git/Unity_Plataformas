@@ -1473,8 +1473,8 @@ GameObject:
   - component: {fileID: 1162653077}
   - component: {fileID: 1162653081}
   - component: {fileID: 1162653080}
-  - component: {fileID: 1162653079}
   - component: {fileID: 1162653082}
+  - component: {fileID: 1162653083}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1553,28 +1553,6 @@ Transform:
   - {fileID: 1154550360}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1162653079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162653076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f805b4726d06fa4e94f8f56cc110576, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocidad: 3
-  fuerzaSalto: 7
-  saltoMejorado: 1
-  saltoLargo: 1.5
-  saltoCorto: 1
-  checkGround: {fileID: 1154550360}
-  checkGroundRadio: 0.2
-  capaSuelo:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!70 &1162653080
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1635,7 +1613,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -1661,6 +1639,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1162653083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162653076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f805b4726d06fa4e94f8f56cc110576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocidad: 3
+  fuerzaSalto: 7
+  saltoMejorado: 1
+  saltoLargo: 1.5
+  saltoCorto: 1
+  checkGround: {fileID: 1154550360}
+  checkGroundRadio: 0.25
+  capaSuelo:
+    serializedVersion: 2
+    m_Bits: 64
+  addRayo: 0.23
+  anguloMax: 46
+  sinF: {fileID: 6200000, guid: 0bdc4fccfef84b845894c726b593bb2e, type: 2}
+  maxF: {fileID: 6200000, guid: d6ae2139fb9720648963ffcde0a3cdf8, type: 2}
+  tocaSuelo: 0
+  enPendiente: 0
+  puedoAndar: 0
+  anguloPendiente: 0
+  h: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
