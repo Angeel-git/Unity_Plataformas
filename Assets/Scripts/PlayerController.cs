@@ -39,10 +39,12 @@ public class PlayerController : MonoBehaviour
     private float               anguloLateral;
     private float               anguloAnterior;
     private Vector2             anguloPer;
+    private Vector3             posIni;
 
 
     void Start()
     {
+        posIni = transform.position;
         rPlayer = GetComponent<Rigidbody2D>();
         aPlayer = GetComponent<Animator>();
         ccPlayer = GetComponent<CapsuleCollider2D>();
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour
 
     private void recibePulsaciones()
     {
+        if(Input.GetKey(KeyCode.R)) transform.position = posIni;    //VOLVER AL PLAYER A POS INICIAL
         h = Input.GetAxisRaw("Horizontal");
         if ((h < 0 && miraDerecha) || (h > 0 && !miraDerecha)) giraPlayer();
         if (Input.GetButtonDown("Jump") && puedoSaltar) Salto();
