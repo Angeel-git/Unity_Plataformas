@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
     private void recibePulsaciones()
     {
-        if(Input.GetKey(KeyCode.R)) transform.position = posIni;    //VOLVER AL PLAYER A POS INICIAL
+        if(Input.GetKey(KeyCode.R)) reaparece();    //VOLVER AL PLAYER A POS INICIAL
         h = Input.GetAxisRaw("Horizontal");
         if ((h < 0 && miraDerecha) || (h > 0 && !miraDerecha)) giraPlayer();
         if (Input.GetButtonDown("Jump") && puedoSaltar) Salto();
@@ -159,7 +159,28 @@ private void OnCollisionExit2D(Collision2D collision)
             checkPendHoriz(posPies);
             checkPendVerti(posPies);
         }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Pinchos")
+        {
+            Debug.Log("Quita salud");
+            pierdeVida();
+        }
+        
+    }
+
+    private void pierdeVida()
+    {
+        Debug.Log("PierdeVida");
+        reaparece();    
+    }
+
+    private void reaparece()
+    {
+        rPlayer.linearVelocity = Vector3.zero;
+        transform.position = posIni;
     }
 
     private void checkPendHoriz(Vector2 posPies)

@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\PlataformaMovil.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlatReco.cs" />
+    <Compile Include="Assets\Scripts\PiedraPinchos.cs" />
     <Compile Include="Assets\Scripts\SeguimientoCamara.cs" />
     <Compile Include="Assets\Scripts\ActivaMensaje.cs" />
     <Compile Include="Assets\Scripts\PlataformaCae.cs" />
