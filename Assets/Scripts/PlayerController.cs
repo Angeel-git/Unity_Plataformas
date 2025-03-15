@@ -168,6 +168,11 @@ private void OnCollisionExit2D(Collision2D collision)
             Debug.Log("Quita salud");
             pierdeVida();
         }
+        if(collision.gameObject.tag == "CaidaAlVacio")
+        {
+            Debug.Log("Muerte por caida al vacio");
+            pierdeVida();
+        }
         
     }
 
