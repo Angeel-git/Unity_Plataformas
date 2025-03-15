@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\PlatReco.cs" />
     <Compile Include="Assets\Scripts\SeguimientoCamara.cs" />
     <Compile Include="Assets\Scripts\ActivaMensaje.cs" />
+    <Compile Include="Assets\Scripts\PlataformaCae.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
