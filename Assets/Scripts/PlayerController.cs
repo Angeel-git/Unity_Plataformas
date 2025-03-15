@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private bool                miraDerecha = true;
     private bool                saltando = false;
     private bool                puedoSaltar = false;
+    private bool                enPlataforma = false;
     private Vector2             nuevaVelocidad;
     private CapsuleCollider2D   ccPlayer;
     private Vector2             ccSize;
@@ -126,49 +127,101 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void checkPendiente()
+private void OnCollisionEnter2D(Collision2D collision)
+{
+    if (collision.gameObject.tag == "PlataformaMovil")
     {
-                                //HORIZONTALES
-        Vector2 posPies = transform.position - (Vector3)(new Vector2(0.0f, ccSize.y / 2));
+        rPlayer.linearVelocity = Vector3.zero;
+        transform.parent = collision.transform;
+        enPlataforma = true;
+    }
+}
+
+private void OnCollisionExit2D(Collision2D collision)
+{
+    if (collision.gameObject.tag == "PlataformaMovil")
+    {
+        transform.parent = null;
+        enPlataforma = false;
+    }
+}
+
+
+
+        private void checkPendiente()
+    {
+        if(!enPlataforma)
+        {
+            Vector2 posPies = transform.position - (Vector3)(new Vector2(0.0f, ccSize.y / 2));
+            checkPendHoriz(posPies);
+            checkPendVerti(posPies);
+        }
+
+    }
+
+    private void checkPendHoriz(Vector2 posPies)
+    {
         RaycastHit2D hitDelante = Physics2D.Raycast(posPies, Vector2.right, addRayo, capaSuelo);
         RaycastHit2D hitDetras = Physics2D.Raycast(posPies, -Vector2.right, addRayo, capaSuelo);
         Debug.DrawRay(posPies, Vector2.right * addRayo, Color.cyan);
         Debug.DrawRay(posPies, -Vector2.right * addRayo, Color.red);
 
-        if(hitDelante)
+        if (hitDelante)
         {
             enPendiente = true;
             anguloLateral = Vector2.Angle(hitDelante.normal, Vector2.up);
-        }else if (hitDetras)
+        }
+        else if (hitDetras)
         {
             enPendiente = true;
             anguloLateral = Vector2.Angle(hitDetras.normal, Vector2.up);
-        }else
+        }
+        else
         {
             enPendiente = false;
             anguloLateral = 0.0f;
         }
+    }
 
-                                    //VERTICALES
-        RaycastHit2D hit = Physics2D.Raycast(posPies, Vector2.down, addRayo, capaSuelo);
-        if(hit)
+        private void checkPendVerti(Vector2 posPies)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(ccPlayer.bounds.center, Vector2.down, ccPlayer.bounds.extents.y + addRayo, capaSuelo);
+
+        if (hit)
         {
             anguloPendiente = Vector2.Angle(hit.normal, Vector2.up);
             anguloPer = Vector2.Perpendicular(hit.normal).normalized;
-            if(anguloPendiente != anguloAnterior) enPendiente = true;
-            anguloAnterior = anguloPendiente;
+
+            if (anguloPendiente != anguloAnterior)
+            {
+                enPendiente = true;
+                anguloAnterior = anguloPendiente;
+            }
+
             Debug.DrawRay(hit.point, anguloPer, Color.blue);
             Debug.DrawRay(hit.point, hit.normal, Color.green);
-        }
 
-        if(anguloPendiente > anguloMax || anguloLateral > anguloMax) puedoAndar = false; else puedoAndar = true;
-        if (enPendiente && puedoAndar && h == 0.0f)
-        {
-            ccPlayer.sharedMaterial = maxF;
-        }else{
-            ccPlayer.sharedMaterial = sinF;
+            if (anguloPendiente > anguloMax || anguloLateral > anguloMax)
+            {
+                puedoAndar = false;
+            }
+            else
+            {
+                puedoAndar = true;
+
+                if (enPendiente && puedoAndar && h == 0.0f)
+                {
+                    rPlayer.sharedMaterial = maxF;
+                }
+                else
+                {
+                    rPlayer.sharedMaterial = sinF;
+                }
+            }
         }
-}
+    }
+
+
 
     private void variablesAnimador()
     {
