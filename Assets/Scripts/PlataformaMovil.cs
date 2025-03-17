@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlataformaMovil : MonoBehaviour
+public class PlataformaMovilSimple  : MonoBehaviour
 {
     [SerializeField] private Transform destino;
     [SerializeField] private float velocidad;

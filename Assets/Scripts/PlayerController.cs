@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKey(KeyCode.R)) reaparece();    //VOLVER AL PLAYER A POS INICIAL
         h = Input.GetAxisRaw("Horizontal");
         if ((h < 0 && miraDerecha) || (h > 0 && !miraDerecha)) giraPlayer();
-        if (Input.GetButtonDown("Jump") && puedoSaltar) Salto();
+        if (Input.GetButtonDown("Jump") && puedoSaltar && tocaSuelo) Salto();
         if (saltoMejorado) SaltoMejorado();
     }
 
@@ -164,6 +164,11 @@ private void OnCollisionExit2D(Collision2D collision)
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Pinchos")
+        {
+            Debug.Log("Quita salud");
+            pierdeVida();
+        }
+        if(collision.gameObject.tag == "Enemigo")
         {
             Debug.Log("Quita salud");
             pierdeVida();
