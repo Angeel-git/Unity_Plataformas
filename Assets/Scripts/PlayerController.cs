@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
     private Vector2             anguloPer;
     private Vector3             posIni;
 
+    private MenuFinPartida menuFinPartida;          //Hace referencia al scrip "MenuFinPartida" para usar sus metodos
+
 
     void Start()
     {
@@ -49,6 +51,8 @@ public class PlayerController : MonoBehaviour
         aPlayer = GetComponent<Animator>();
         ccPlayer = GetComponent<CapsuleCollider2D>();
         ccSize = ccPlayer.size;
+
+        menuFinPartida = FindObjectOfType<MenuFinPartida>();    //Hace referencia al scrip "MenuFinPartida" para usar sus metodos
     }
 
     void Update()
@@ -184,7 +188,7 @@ private void OnCollisionExit2D(Collision2D collision)
     private void pierdeVida()
     {
         Debug.Log("PierdeVida");
-        reaparece();    
+        menuFinPartida.MostrarMenu();
     }
 
     private void reaparece()
